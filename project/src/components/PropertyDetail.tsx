@@ -6,6 +6,7 @@ import BookingForm from './BookingForm';
 import { toast } from 'react-hot-toast';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { ReviewSection } from './ReviewSection';
 
 interface PropertyDetailProps {
   property: Property;
@@ -220,6 +221,10 @@ const PropertyDetail: React.FC<PropertyDetailProps> = ({ property, onClose }) =>
                   </div>
                 </div>
               )}
+
+              <div className="mb-6">
+                <ReviewSection propertyId={Number(id)} />
+              </div>
             </div>
 
             <div className="p-4 border-t bg-gray-50">

@@ -41,12 +41,12 @@ export interface CreateBookingDTO {
   total_price: number;
 }
 
-/**
- * Creates a new booking for a property
- */
+/* create new booking */
+
+
 export const createBooking = async (bookingData: CreateBookingDTO): Promise<{ success: boolean; error?: string; booking?: Booking }> => {
   try {
-    // Get current user from auth
+    // get user it
     const { data: { user }, error: userError } = await supabase.auth.getUser();
     
     if (!user) {
@@ -54,7 +54,7 @@ export const createBooking = async (bookingData: CreateBookingDTO): Promise<{ su
       return { success: false, error: 'You must be logged in to make a booking.' };
     }
 
-    // Check if the property is available for the selected dates
+    // check if its avaliable by going to supa
     const isAvailable = await checkPropertyAvailability(
       bookingData.property_id,
       bookingData.check_in_date,
@@ -66,7 +66,7 @@ export const createBooking = async (bookingData: CreateBookingDTO): Promise<{ su
       return { success: false, error: 'Property is not available for the selected dates.' };
     }
 
-    // Create the booking using auth user id
+    // adds to table booking
     const { data: booking, error } = await supabase
       .from('bookings')
       .insert([{
@@ -142,7 +142,7 @@ export const cancelBooking = async (bookingId: string): Promise<{ success: boole
       .from('bookings')
       .select('customer_id, status, check_in_date')
       .eq('id', bookingId)
-      .single();
+      .single();  
 
     if (fetchError || !booking) {
       toast.error('Booking not found.');
